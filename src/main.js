@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
-import Cars from './components/Cars';
+import AppCars from './components/AppCars';
 
 const routes = [
   { path: '/', redirect: '/cars' },
-  { path: '/cars', component: Cars }
+  { path: '/cars', component: AppCars }
 ];
 
 const router = new VueRouter({
