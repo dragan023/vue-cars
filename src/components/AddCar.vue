@@ -135,9 +135,16 @@ export default {
         this.options.push(i);
       }
     },
-    handleFormSubmit() {
-      carsService.addCar(this.car);
-      this.$router.push('/cars');
+    async handleFormSubmit() {
+      const response = await carsService.addCar(this.car);
+
+      if (response) {
+        this.$router.push('/cars');
+      }
+      this.handleResetForm();
+    },
+    handleResetForm() {
+      this.car = {};
     }
   }
 };

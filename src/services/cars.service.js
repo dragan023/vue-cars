@@ -8,9 +8,14 @@ export default class CarsService {
   }
 
   async addCar(car) {
-    const data = await HTTP.post('/cars', car);
+    try {
+      const data = await HTTP.post('/cars', car);
 
-    return data;
+      return data;
+    } catch (error) {
+      
+      return false;
+    }
   }
 }
 
