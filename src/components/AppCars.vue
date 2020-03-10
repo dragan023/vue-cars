@@ -8,9 +8,17 @@
             <p class="card-text">
               {{ car.model }}
             </p>
-            <button @click="handleEditCar(car.id)" class="btn btn-info d-flex ml-auto">
-              Edit
-            </button>
+            <div class="d-flex">
+              <button @click="handleEditCar(car.id)" class="btn btn-info ml-2">
+                Edit
+              </button>
+              <button
+                @click="handleDeleteCar(car.id)"
+                class="btn btn-danger ml-2"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -25,7 +33,8 @@ export default {
   name: 'AppCars',
   data() {
     return {
-      cars: []
+      cars: [],
+      deleteable: ''
     };
   },
   async created() {
@@ -34,6 +43,13 @@ export default {
   methods: {
     handleEditCar(id) {
       this.$router.push(`/edit/${id}`);
+    },
+    handleDeleteCar(id) {
+      this.deleteable = prompt('Are you sure?');
+      if (this.deleteable.toLowerCase() === 'yes') {
+        carsService.deleteCar(id);
+        location.reload();
+      }
     }
   },
   computed: {

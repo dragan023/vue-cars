@@ -36,6 +36,16 @@ export default class CarsService {
       return false;
     }
   }
+
+  async deleteCar(id) {
+    try {
+      const data = await HTTP.delete(`/cars/${id}`);
+
+      return data.data;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 export const carsService = new CarsService();
