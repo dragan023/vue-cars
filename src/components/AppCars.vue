@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-4" v-for="car in cars" :key="car.id">
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-3" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title">{{ car.brand }}</h5>
             <p class="card-text">

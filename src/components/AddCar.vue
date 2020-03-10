@@ -108,8 +108,13 @@
         <label class="custom-control-label" for="hybrid">Hybrid</label>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button type="button" @click="handleResetForm" class="btn btn-danger">Reset</button>
+      <button type="submit" class="btn btn-success mr-1">Submit</button>
+      <button type="button" @click="handleResetForm" class="btn btn-danger mr-1">
+        Reset
+      </button>
+      <button type="button" @click="handlePreviewForm" class="btn btn-info mr-1">
+        Preview
+      </button>
     </form>
   </div>
 </template>
@@ -142,6 +147,9 @@ export default {
       if (response) {
         this.$router.push('/cars');
       }
+    },
+    handlePreviewForm() {
+      alert(JSON.stringify(this.car));
     },
     handleResetForm() {
       this.car = {};
