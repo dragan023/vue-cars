@@ -109,6 +109,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" @click="handleResetForm" class="btn btn-danger">Reset</button>
     </form>
   </div>
 </template>
@@ -141,7 +142,6 @@ export default {
       if (response) {
         this.$router.push('/cars');
       }
-      this.handleResetForm();
     },
     handleResetForm() {
       this.car = {};
