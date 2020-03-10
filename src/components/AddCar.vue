@@ -10,6 +10,12 @@
           placeholder="Brand"
           v-model="car.brand"
         />
+        <p v-if="!car.brand && validateForm" class="text-danger">
+          Brand is required
+        </p>
+        <p v-if="car.brand.length < 2 && validateForm" class="text-danger">
+          Brand needs to be at least 2 characters
+        </p>
       </div>
 
       <div class="form-group">
@@ -21,6 +27,12 @@
           placeholder="Model"
           v-model="car.model"
         />
+        <p v-if="!car.model && validateForm" class="text-danger">
+          Model is required
+        </p>
+        <p v-if="car.model.length < 2 && validateForm" class="text-danger">
+          Model needs to be at least 2 characters
+        </p>
       </div>
 
       <div class="form-group">
@@ -29,6 +41,9 @@
           <option disabled :value="''">Please select year</option>
           <option v-for="year in options" :key="year"> {{ year }}</option>
         </select>
+        <p v-if="!car.year && validateForm" class="text-danger">
+          Year is required
+        </p>
       </div>
 
       <div class="form-group">
@@ -51,6 +66,9 @@
           placeholder="Number of doors"
           v-model="car.numberOfDoors"
         />
+        <p v-if="!car.numberOfDoors && validateForm" class="text-danger">
+          Year is required
+        </p>
       </div>
 
       <div class="form-check">
@@ -61,6 +79,9 @@
           id="is-automatic"
         />
         <label class="form-check-label" for="is-automatic">Is automatic</label>
+        <p v-if="!car.isAutomatic && validateForm" class="text-danger">
+          Year is required
+        </p>
       </div>
 
       <div class="custom-control custom-radio">
@@ -107,12 +128,23 @@
         />
         <label class="custom-control-label" for="hybrid">Hybrid</label>
       </div>
+      <p v-if="!car.engine && validateForm" class="text-danger">
+        Year is required
+      </p>
 
       <button type="submit" class="btn btn-success mr-1">Submit</button>
-      <button type="button" @click="handleResetForm" class="btn btn-danger mr-1">
+      <button
+        type="button"
+        @click="handleResetForm"
+        class="btn btn-danger mr-1"
+      >
         Reset
       </button>
-      <button type="button" @click="handlePreviewForm" class="btn btn-info mr-1">
+      <button
+        type="button"
+        @click="handlePreviewForm"
+        class="btn btn-info mr-1"
+      >
         Preview
       </button>
     </form>
@@ -127,9 +159,12 @@ export default {
   data() {
     return {
       car: {
-        year: ''
+        year: '',
+        brand: '',
+        model: ''
       },
-      options: []
+      options: [],
+      validateForm: false
     };
   },
   created() {
@@ -142,6 +177,10 @@ export default {
       }
     },
     async handleFormSubmit() {
+      console.log(this.handleValidationForm());
+      if (!this.handleValidationForm()) {
+        return false;
+      }
       const response = await carsService.addCar(this.car);
 
       if (response) {
@@ -153,6 +192,22 @@ export default {
     },
     handleResetForm() {
       this.car = {};
+    },
+    handleValidationForm() {
+      this.validateForm = true;
+
+      if (
+        !this.car.brand ||
+        !this.car.model ||
+        !this.car.year ||
+        !this.car.engine ||
+        !this.car.numberOfDoors ||
+        this.car.brand.length < 2 ||
+        this.car.model.length < 2
+      ) {
+        return false;
+      }
+      return true;
     }
   }
 };
