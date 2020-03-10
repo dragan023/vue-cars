@@ -8,7 +8,9 @@
             <p class="card-text">
               {{ car.model }}
             </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <button @click="handleEditCar(car.id)" class="btn btn-info d-flex ml-auto">
+              Edit
+            </button>
           </div>
         </div>
       </div>
@@ -28,6 +30,11 @@ export default {
   },
   async created() {
     this.cars = await this.getCars;
+  },
+  methods: {
+    handleEditCar(id) {
+      this.$router.push(`/edit/${id}`);
+    }
   },
   computed: {
     getCars() {

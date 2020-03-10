@@ -164,11 +164,16 @@ export default {
         model: ''
       },
       options: [],
-      validateForm: false
+      validateForm: false,
+      edittingCarId: null
     };
   },
-  created() {
+  async created() {
     this.generateOptions();
+    if (this.$route.params.id) {
+      this.edittingCarId = this.$route.params.id;
+      this.car = await carsService.getCar(this.edittingCarId);
+    }
   },
   methods: {
     generateOptions() {
@@ -177,11 +182,15 @@ export default {
       }
     },
     async handleFormSubmit() {
-      console.log(this.handleValidationForm());
       if (!this.handleValidationForm()) {
         return false;
       }
-      const response = await carsService.addCar(this.car);
+      let response = null;
+      if (!this.edittingCarId) {
+        response = await carsService.addCar(this.car);
+      } else {
+        response = await carsService.editCar(this.edittingCarId, this.car);
+      }
 
       if (response) {
         this.$router.push('/cars');

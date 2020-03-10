@@ -13,7 +13,26 @@ export default class CarsService {
 
       return data;
     } catch (error) {
-      
+      return false;
+    }
+  }
+
+  async getCar(id) {
+    try {
+      const data = await HTTP.get(`/cars/${id}`);
+
+      return data.data;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async editCar(id, car) {
+    try {
+      const data = await HTTP.put(`/cars/${id}`, car);
+
+      return data.data;
+    } catch (error) {
       return false;
     }
   }
